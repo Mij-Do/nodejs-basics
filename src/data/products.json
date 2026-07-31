@@ -1,24 +1,24 @@
 {
-    "products": [
-        {
-            "id": 1,
-            "product": "First Products"
-        },
-        {
-            "id": 2,
-            "product": "Second Products"
-        },
-        {
-            "id": 3,
-            "product": "Third Products"
-        },
-        {
-            "id": 4,
-            "product": "Fourth Products"
-        },
-        {
-            "id": 5,
-            "product": "Fifth Products"
-        }
-    ]
+  "products": [
+    {
+      "id": 1,
+      "title": "first Products",
+      "description": "first description"
+    },
+    {
+      "id": 2,
+      "title": "Second Products",
+      "description": "second description"
+    },
+    {
+      "id": 2,
+      "title": "Second Products",
+      "description": "second description"
+    },
+    {
+      "id": 2,
+      "title": "Second Products",
+      "description": "second description"
+    }
+  ]
 }

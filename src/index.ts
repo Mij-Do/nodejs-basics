@@ -21,22 +21,24 @@ const server = http.createServer((req, res) => {
                 return;
             };
             fs.readFile(productsFilePath, "utf8", (err, data) => {
+                const jsonProducts: 
+                    {products: [{id: number, title: string, description: string}]} = JSON.parse(data);
+                    const submittedProduct = {
+                            "id": 2,
+                            "title": "Second Products",
+                            "description": "second description"
+                        }
+                    jsonProducts.products.push(submittedProduct);
+                    const updatedData = JSON.stringify(jsonProducts, null, 2);
                 // writeFile
-                fs.writeFile(productsFilePath, 
-                    JSON.stringify(
-                        {
-                            "id": 6,
-                            "product": "Sixth Products"
-                        },
-                        null,
-                        2
-                    ),
+                fs.writeFile(
+                    productsFilePath, 
+                    updatedData,
                     {flag: "w"},
-                    err => { console.log(err) }
+                    err => { console.log(err)},
                 );
-                
                 console.error("error =>", err);
-                console.log("data =>", JSON.parse(data));
+                console.log("data =>", jsonProducts);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.write(data);
                 res.end();
