@@ -9,6 +9,16 @@
       "id": 2,
       "title": "new title",
       "description": "new description "
+    },
+    {
+      "id": 3,
+      "title": "the third product",
+      "description": "third product description "
+    },
+    {
+      "id": 4,
+      "title": "the fourth product",
+      "description": "fourth product description "
     }
   ]
 }

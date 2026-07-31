@@ -2,7 +2,7 @@
 // const http = require("node:http");
 
 import * as http from "node:http";
-import fs from "fs";
+import fs, {promises as fsPromises} from "fs";
 import path from "path";
 import { fileURLToPath } from "node:url";
 
@@ -55,34 +55,58 @@ const server = http.createServer((req, res) => {
         req.on("data", (chunk) => {
             body += chunk.toString();
         });
-        req.on("end", () => {
+        req.on("end", async () => {
             const data = new URLSearchParams(body);
             const title = data.get("title");
             const description = data.get("description");
-            fs.readFile(productsFilePath, "utf8", (err, data) => {
-                if (err) {
-                    res.writeHead(500, { 'Content-Type': 'text/html' });
-                    return res.end("<h1>Something went wrong reading products</h1>");
-                }
 
+            // ## the old way 
+
+            // fs.readFile(productsFilePath, "utf8", (err, data) => {
+            //     if (err) {
+            //         res.writeHead(500, { 'Content-Type': 'text/html' });
+            //         return res.end("<h1>Something went wrong reading products</h1>");
+            //     }
+
+            //     const jsonProducts: 
+            //         {products: [{id: number, title: string, description: string}]} = JSON.parse(data);
+            //         jsonProducts.products.push({
+            //             id: jsonProducts.products.length + 1,
+            //             title: title as string,
+            //             description: description as string
+            //         });
+            //         const updatedData = JSON.stringify(jsonProducts, null, 2);
+            //     // writeFile
+            //     fs.writeFile(
+            //         productsFilePath, 
+            //         updatedData,
+            //         {flag: "w"},
+            //         err => { console.log(err)},
+            //     );
+            //     console.error("error =>", err);
+            //     console.log("data =>", jsonProducts);
+            // });
+
+            // the new way
+            try {
+                const jsonData = await fsPromises.readFile(productsFilePath, "utf8");
                 const jsonProducts: 
-                    {products: [{id: number, title: string, description: string}]} = JSON.parse(data);
-                    jsonProducts.products.push({
-                        id: jsonProducts.products.length + 1,
-                        title: title as string,
-                        description: description as string
-                    });
-                    const updatedData = JSON.stringify(jsonProducts, null, 2);
-                // writeFile
-                fs.writeFile(
+                    {products: [{id: number, title: string, description: string}]} = JSON.parse(jsonData);
+                jsonProducts.products.push({
+                    id: jsonProducts.products.length + 1,
+                    title: title as string,
+                    description: description as string
+                });
+                const updatedData = JSON.stringify(jsonProducts, null, 2);
+                fsPromises.writeFile(
                     productsFilePath, 
                     updatedData,
                     {flag: "w"},
-                    err => { console.log(err)},
                 );
-                console.error("error =>", err);
                 console.log("data =>", jsonProducts);
-            });
+            } catch (error) {
+                console.log(error)
+            }
 
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.write(`
