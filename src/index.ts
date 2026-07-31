@@ -11,6 +11,8 @@ const __dirname = path.dirname(__filename);
 
 const server = http.createServer((req, res) => {
     const productsFilePath = path.join(__dirname, "data", "products.json");
+    const assetsPath = path.join(__dirname, "assets");
+
     if (req.url === "/") {
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end("<h1>Welcome Back!</h1>");
@@ -118,6 +120,23 @@ const server = http.createServer((req, res) => {
                 `);
             res.end();
         });
+    } else if (req.method === "GET" && req.url === "/assets") {
+        fs.access(assetsPath, (err) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            fs.readdir(assetsPath, (err, files) => {
+                res.writeHead(200, {"content-type": "text/html"});
+                res.write("<h1> Here is your Files ... </h1>")
+                res.write("<ul>");
+                files.forEach(file => {
+                    res.write(`<li> <span> ${file} </span> - <button>Delete</button> </li>`)
+                });
+                res.write("</ul>");
+                res.end();
+            })
+        })
     } else {
         res.writeHead(404, { 'Content-Type': 'text/html' });
         res.end("<h1>Not Found!</h1>");
