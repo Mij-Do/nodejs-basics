@@ -10,11 +10,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const server = http.createServer((req, res) => {
+    const productsFilePath = path.join(__dirname, "data", "products.json");
     if (req.url === "/") {
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end("<h1>Welcome Back!</h1>");
     } else if (req.url === "/products") {
-        const productsFilePath = path.join(__dirname, "data", "products.json");
         fs.access(productsFilePath, err => {
             if (err) {
                 console.log("this path does not exists", productsFilePath);
@@ -23,20 +23,6 @@ const server = http.createServer((req, res) => {
             fs.readFile(productsFilePath, "utf8", (err, data) => {
                 const jsonProducts: 
                     {products: [{id: number, title: string, description: string}]} = JSON.parse(data);
-                    const submittedProduct = {
-                            "id": 2,
-                            "title": "Second Products",
-                            "description": "second description"
-                        }
-                    jsonProducts.products.push(submittedProduct);
-                    const updatedData = JSON.stringify(jsonProducts, null, 2);
-                // writeFile
-                fs.writeFile(
-                    productsFilePath, 
-                    updatedData,
-                    {flag: "w"},
-                    err => { console.log(err)},
-                );
                 console.error("error =>", err);
                 console.log("data =>", jsonProducts);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -73,6 +59,30 @@ const server = http.createServer((req, res) => {
             const data = new URLSearchParams(body);
             const title = data.get("title");
             const description = data.get("description");
+            fs.readFile(productsFilePath, "utf8", (err, data) => {
+                if (err) {
+                    res.writeHead(500, { 'Content-Type': 'text/html' });
+                    return res.end("<h1>Something went wrong reading products</h1>");
+                }
+
+                const jsonProducts: 
+                    {products: [{id: number, title: string, description: string}]} = JSON.parse(data);
+                    jsonProducts.products.push({
+                        id: jsonProducts.products.length + 1,
+                        title: title as string,
+                        description: description as string
+                    });
+                    const updatedData = JSON.stringify(jsonProducts, null, 2);
+                // writeFile
+                fs.writeFile(
+                    productsFilePath, 
+                    updatedData,
+                    {flag: "w"},
+                    err => { console.log(err)},
+                );
+                console.error("error =>", err);
+                console.log("data =>", jsonProducts);
+            });
 
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.write(`
