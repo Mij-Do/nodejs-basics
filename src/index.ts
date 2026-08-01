@@ -138,8 +138,19 @@ const server = http.createServer((req, res) => {
             })
         })
     } else if (req.method === "GET" && req.url?.startsWith('/delete')) {
-        res.write("<h1> This file has been deleted! </h1>");
-        res.end();
+        const file = decodeURIComponent(req.url.split("?")[1]?.split("=")[1] as string);
+        const assetsPathDelete = path.join(__dirname, "assets", file);
+
+        fs.unlink(assetsPathDelete, err => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            res.writeHead(200, {"content-type": "text/html"});
+            res.write("<h1> This file has been deleted! </h1>");
+            res.end();
+        })
+        
     } else {
         res.writeHead(404, { 'Content-Type': 'text/html' });
         res.end("<h1>Not Found!</h1>");
