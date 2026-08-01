@@ -128,15 +128,18 @@ const server = http.createServer((req, res) => {
             }
             fs.readdir(assetsPath, (err, files) => {
                 res.writeHead(200, {"content-type": "text/html"});
-                res.write("<h1> Here is your Files ... </h1>")
+                res.write("<h1> Here is your Files ... </h1>");
                 res.write("<ul>");
                 files.forEach(file => {
-                    res.write(`<li> <span> ${file} </span> - <button>Delete</button> </li>`)
+                    res.write(`<li> <a href="/delete?file=${encodeURIComponent(file)}"> ${file} </a> </li>`)
                 });
                 res.write("</ul>");
                 res.end();
             })
         })
+    } else if (req.method === "GET" && req.url?.startsWith('/delete')) {
+        res.write("<h1> This file has been deleted! </h1>");
+        res.end();
     } else {
         res.writeHead(404, { 'Content-Type': 'text/html' });
         res.end("<h1>Not Found!</h1>");
