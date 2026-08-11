@@ -1,5 +1,6 @@
 import express from 'express';
 import { generateFakeData } from './utils/fakeData.js';
+import type { IProduct } from './interfaces/index.js';
 
 
 const app = express();
@@ -12,7 +13,25 @@ app.get('/', (req, res) => {
 const DUMMY_DATA =  generateFakeData();
 
 app.get('/products', (req, res) => {
-    res.send(DUMMY_DATA);
+    const queryParams = req.query.filter as string;
+    
+    if (queryParams) {
+        const propertiesToFilter = queryParams.split(",");
+
+        let filteredProducts = [];
+
+        filteredProducts = DUMMY_DATA.map(product => {
+            const filteredProduct: any = {};
+            propertiesToFilter.forEach(property => {
+                if (product.hasOwnProperty(property as keyof IProduct)) {
+                    filteredProduct[property] = product[property as keyof IProduct];
+                }
+            });
+            return {id: product.id, ...filteredProduct};
+        });
+        return res.send(filteredProducts);
+    }
+    return res.send(DUMMY_DATA);
 });
 
 app.get(`/products/:id`, (req, res) => {
