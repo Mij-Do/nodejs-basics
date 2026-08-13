@@ -93,6 +93,26 @@ app.patch("/products/:id", (req, res) => {
     }
 });
 
+// delete || delete the product
+app.delete("/products/:id", (req, res) => {
+    const productId = +req.params.id;
+    if (isNaN(productId)) {
+        return res.status(404).send({
+            message: "Product not Found!",
+        });
+    }
+
+    const productIndex: number | undefined = DUMMY_DATA.findIndex(product => product.id === productId);
+
+    if (productIndex !== -1) {
+        const filteredProducts = DUMMY_DATA.filter(product => product.id !== productId);
+        return res.status(200).send(filteredProducts);
+    } else {
+        return res.status(404).send({
+            message: "Product not Found!",
+        });
+    }
+});
 
 const PORT = 5000;
 app.listen(PORT ,() => {
