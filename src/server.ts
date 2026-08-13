@@ -69,6 +69,30 @@ app.post("/products", (req, res) => {
     });
 });
 
+// patch || update the products
+app.patch("/products/:id", (req, res) => {
+    const productId = +req.params.id;
+    if (isNaN(productId)) {
+        return res.status(404).send({
+            message: "Product not Found!",
+        });
+    }
+
+    const productIndex: number | undefined = DUMMY_DATA.findIndex(product => product.id === productId);
+    const productBody = req.body;
+
+    if (productIndex !== -1) {
+        DUMMY_DATA[productIndex] = {...DUMMY_DATA[productIndex], ...productBody};
+        return res.status(200).send({
+            message: "Product has been Updated!"
+        });
+    } else {
+        return res.status(404).send({
+            message: "Product not Found!",
+        });
+    }
+});
+
 
 const PORT = 5000;
 app.listen(PORT ,() => {
