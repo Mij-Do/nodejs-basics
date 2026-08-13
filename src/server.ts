@@ -5,18 +5,20 @@ import type { IProduct } from './interfaces/index.js';
 
 const app = express();
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
     res.send(`<h1> Hello Express.JS! </h1>`);
 });
 
 // Endpoint
 const DUMMY_DATA =  generateFakeData();
-
+// get products
 app.get('/products', (req, res) => {
-    const queryParams = req.query.filter as string;
+    const filteredQuery = req.query.filter as string;
     
-    if (queryParams) {
-        const propertiesToFilter = queryParams.split(",");
+    if (filteredQuery) {
+        const propertiesToFilter = filteredQuery.split(",");
 
         let filteredProducts = [];
 
@@ -50,7 +52,23 @@ app.get(`/products/:id`, (req, res) => {
     } else {
         res.status(404).send({message: `Can not find Product with ID => ${productId}`});
     }
-})
+});
+
+// post || create a new product
+app.post("/products", (req, res) => {
+    // console.log(req.body);
+    const newProduct = req.body;
+
+    DUMMY_DATA.push({id: DUMMY_DATA.length + 1, ...newProduct});
+    
+    res.status(201).send({
+        id: DUMMY_DATA.length + 1,
+        title: newProduct.title,
+        description: newProduct.description,
+        price: newProduct.price,
+    });
+});
+
 
 const PORT = 5000;
 app.listen(PORT ,() => {
