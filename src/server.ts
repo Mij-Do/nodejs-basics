@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 });
 
 // Endpoint
-const DUMMY_DATA =  generateFakeData();
+const fakeProductData =  generateFakeData();
 // get products
 app.get('/products', (req, res) => {
     const filteredQuery = req.query.filter as string;
@@ -22,7 +22,7 @@ app.get('/products', (req, res) => {
 
         let filteredProducts = [];
 
-        filteredProducts = DUMMY_DATA.map(product => {
+        filteredProducts = fakeProductData.map(product => {
             const filteredProduct: any = {};
             propertiesToFilter.forEach(property => {
                 if (product.hasOwnProperty(property as keyof IProduct)) {
@@ -33,7 +33,7 @@ app.get('/products', (req, res) => {
         });
         return res.send(filteredProducts);
     }
-    return res.send(DUMMY_DATA);
+    return res.send(fakeProductData);
 });
 
 app.get(`/products/:id`, (req, res) => {
@@ -41,7 +41,7 @@ app.get(`/products/:id`, (req, res) => {
     if (isNaN(productId)) {
         res.status(404).send({message: `Invalid Product ID => ${productId}`});
     }
-    const findProduct = DUMMY_DATA.find(product => product.id === productId);
+    const findProduct = fakeProductData.find(product => product.id === productId);
     if (findProduct) {
         res.send({
                 "id": productId,
@@ -59,10 +59,10 @@ app.post("/products", (req, res) => {
     // console.log(req.body);
     const newProduct = req.body;
 
-    DUMMY_DATA.push({id: DUMMY_DATA.length + 1, ...newProduct});
+    fakeProductData.push({id: fakeProductData.length + 1, ...newProduct});
     
     res.status(201).send({
-        id: DUMMY_DATA.length + 1,
+        id: fakeProductData.length + 1,
         title: newProduct.title,
         description: newProduct.description,
         price: newProduct.price,
@@ -78,11 +78,11 @@ app.patch("/products/:id", (req, res) => {
         });
     }
 
-    const productIndex: number | undefined = DUMMY_DATA.findIndex(product => product.id === productId);
+    const productIndex: number | undefined = fakeProductData.findIndex(product => product.id === productId);
     const productBody = req.body;
 
     if (productIndex !== -1) {
-        DUMMY_DATA[productIndex] = {...DUMMY_DATA[productIndex], ...productBody};
+        fakeProductData[productIndex] = {...fakeProductData[productIndex], ...productBody};
         return res.status(200).send({
             message: "Product has been Updated!"
         });
@@ -102,10 +102,10 @@ app.delete("/products/:id", (req, res) => {
         });
     }
 
-    const productIndex: number | undefined = DUMMY_DATA.findIndex(product => product.id === productId);
+    const productIndex: number | undefined = fakeProductData.findIndex(product => product.id === productId);
 
     if (productIndex !== -1) {
-        const filteredProducts = DUMMY_DATA.filter(product => product.id !== productId);
+        const filteredProducts = fakeProductData.filter(product => product.id !== productId);
         return res.status(200).send(filteredProducts);
     } else {
         return res.status(404).send({
