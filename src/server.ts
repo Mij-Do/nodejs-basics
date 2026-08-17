@@ -1,6 +1,8 @@
 import express from 'express';
 import { generateFakeData } from './utils/fakeData.js';
 import type { IProduct } from './interfaces/index.js';
+import ProductsController from './controllers/productsControllers.js';
+import { ProductService } from './services/productService.js';
 
 
 const app = express();
@@ -13,8 +15,15 @@ app.get('/', (req, res) => {
 
 // Endpoint
 const fakeProductData =  generateFakeData();
+
+// services
+const productService = new ProductService();
+// controller
+const productsController = new ProductsController(productService);
+
 // get products
 app.get('/products', (req, res) => {
+    return res.send(productsController.getProducts());
     const filteredQuery = req.query.filter as string;
     
     if (filteredQuery) {
