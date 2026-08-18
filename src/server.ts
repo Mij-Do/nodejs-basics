@@ -2,7 +2,7 @@ import express from 'express';
 import { generateFakeData } from './utils/fakeData.js';
 import type { IProduct } from './interfaces/index.js';
 import ProductsController from './controllers/productsControllers.js';
-import { ProductService } from './services/productService.js';
+import ProductService from './services/productService.js';
 
 
 const app = express();
@@ -17,33 +17,12 @@ app.get('/', (req, res) => {
 const fakeProductData =  generateFakeData();
 
 // services
-const productService = new ProductService();
+const productService = new ProductService(fakeProductData);
 // controller
 const productsController = new ProductsController(productService);
 
 // get products
-app.get('/products', (req, res) => {
-    return res.send(productsController.getProducts());
-    const filteredQuery = req.query.filter as string;
-    
-    if (filteredQuery) {
-        const propertiesToFilter = filteredQuery.split(",");
-
-        let filteredProducts = [];
-
-        filteredProducts = fakeProductData.map(product => {
-            const filteredProduct: any = {};
-            propertiesToFilter.forEach(property => {
-                if (product.hasOwnProperty(property as keyof IProduct)) {
-                    filteredProduct[property] = product[property as keyof IProduct];
-                }
-            });
-            return {id: product.id, ...filteredProduct};
-        });
-        return res.send(filteredProducts);
-    }
-    return res.send(fakeProductData);
-});
+app.get('/products', (req, res) => res.send(productsController.getProducts()));
 
 app.get(`/products/:id`, (req, res) => {
     const productId = +req.params.id;

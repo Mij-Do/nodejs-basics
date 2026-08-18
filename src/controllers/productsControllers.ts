@@ -1,9 +1,10 @@
-import type { ProductService } from "../services/productService.js";
+import type { IProduct } from "../interfaces/index.js";
+import type ProductService from "../services/productService.js";
 
 class ProductsController {
     constructor (private productService: ProductService) {}
 
-    getProducts () {
+    getProducts (): IProduct[] {
         return this.productService.findAll();
     }
 }
