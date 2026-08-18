@@ -1,4 +1,4 @@
-import type { IProduct } from "../interfaces/index.js";
+import type { IProduct, IProductBody } from "../interfaces/index.js";
 
 export default class ProductService {
 
@@ -32,5 +32,17 @@ export default class ProductService {
 
     getProductById (productId: number) {
         return this.findAll().find(product => product.id === productId);
+    }
+
+    createNewProduct (newProduct: IProductBody) {
+        return this.findAll().push({id: this.findAll().length + 1, ...newProduct});
+    }
+
+    updateProducts (index: number, productBody: IProduct) {
+        return this.findAll()[index] = {...this.findAll()[index], ...productBody};
+    }
+
+    deleteProducts (productId: number) {
+        return this.findAll().filter(product => product.id !== productId)
     }
 }
