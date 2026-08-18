@@ -1,6 +1,5 @@
 import express from 'express';
 import { generateFakeData } from './utils/fakeData.js';
-import type { IProduct } from './interfaces/index.js';
 import ProductsController from './controllers/productsControllers.js';
 import ProductService from './services/productService.js';
 
@@ -22,7 +21,7 @@ const productService = new ProductService(fakeProductData);
 const productsController = new ProductsController(productService);
 
 // get products
-app.get('/products', (req, res) => res.send(productsController.getProducts()));
+app.get('/products', (req, res) => res.send(productsController.getProducts(req)));
 
 app.get(`/products/:id`, (req, res) => {
     const productId = +req.params.id;
