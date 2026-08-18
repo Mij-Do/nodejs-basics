@@ -21,25 +21,9 @@ const productService = new ProductService(fakeProductData);
 const productsController = new ProductsController(productService);
 
 // get products
-app.get('/products', (req, res) => res.send(productsController.getProducts(req)));
+app.get('/products', (req, res) => productsController.getProducts(req, res));
 
-app.get(`/products/:id`, (req, res) => {
-    const productId = +req.params.id;
-    if (isNaN(productId)) {
-        res.status(404).send({message: `Invalid Product ID => ${productId}`});
-    }
-    const findProduct = fakeProductData.find(product => product.id === productId);
-    if (findProduct) {
-        res.send({
-                "id": productId,
-                "title": findProduct.title,
-                "description": findProduct.description,
-                "price": findProduct.price,
-            });
-    } else {
-        res.status(404).send({message: `Can not find Product with ID => ${productId}`});
-    }
-});
+app.get(`/products/:id`, (req, res) => productsController.getProductById(req, res));
 
 // post || create a new product
 app.post("/products", (req, res) => {
