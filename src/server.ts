@@ -7,9 +7,10 @@ import ProductService from './services/productService.js';
 const app = express();
 
 app.use(express.json());
+app.set("view engine", "pug");
 
 app.get('/', (req, res) => {
-    res.send(`<h1> Hello Express.JS! </h1>`);
+    res.render("index");
 });
 
 // Endpoint
