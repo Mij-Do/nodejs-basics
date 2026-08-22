@@ -1,5 +1,6 @@
-import type ProductService from "../services/productService.js";
+
 import {type Request, type Response} from 'express';
+import type ProductService from '../services/productService.js';
 
 class ProductsController {
     constructor (private productService: ProductService) {}

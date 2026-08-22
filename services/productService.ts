@@ -1,5 +1,6 @@
 import type { IProduct, IProductBody } from "../interfaces/index.js";
 
+
 export default class ProductService {
 
     constructor (private products: IProduct[]) {

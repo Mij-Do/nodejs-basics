@@ -1,0 +1,13 @@
+.container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 2px;
+}
+
+.page-title {
+    color: white; 
+    background-color: purple; 
+    padding: 5px; 
+    border-radius: 5px; 
+    text-align: center;
+}

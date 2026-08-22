@@ -1,13 +1,21 @@
 import express from 'express';
+import ProductService from './services/productService.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { generateFakeData } from './utils/fakeData.js';
 import ProductsController from './controllers/productsControllers.js';
-import ProductService from './services/productService.js';
 
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(express.json());
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
+
+// public 
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get('/', (req, res) => {
     res.render("index");
