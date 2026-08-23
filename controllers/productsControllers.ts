@@ -84,8 +84,8 @@ class ProductsController {
 
     renderProductsList (req: Request, res: Response) {
         res.render("products", {
-            pageTitle: "Product Title",
-            description: "Product Description",
+            pageTitle: "Products List",
+            description: "Most of Our Awesome Products",
             products: this.productService.findAll()
         })
     }
