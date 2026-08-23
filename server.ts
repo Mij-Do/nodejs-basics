@@ -17,9 +17,7 @@ app.set("view engine", "pug");
 // public 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get('/', (req, res) => {
-    res.render("index");
-});
+
 
 // Endpoint
 const fakeProductData =  generateFakeData();
@@ -29,13 +27,18 @@ const productService = new ProductService(fakeProductData);
 // controller
 const productsController = new ProductsController(productService);
 
-// get products
-app.get('/products', (req, res) => productsController.getProducts(req, res));
+// Products Routes
+app.get('/products', (req, res) => {
+    res.render("products");
+});
 
-app.get(`/products/:id`, (req, res) => productsController.getProductById(req, res));
+// get products
+app.get('/api/products', (req, res) => productsController.getProducts(req, res));
+
+app.get(`/api/products/:id`, (req, res) => productsController.getProductById(req, res));
 
 // post || create a new product
-app.post("/products", (req, res) => productsController.postNewProduct(req, res));
+app.post("/api/products", (req, res) => productsController.postNewProduct(req, res));
 // console.log(req.body);
 // const newProduct = req.body;
 
@@ -49,7 +52,7 @@ app.post("/products", (req, res) => productsController.postNewProduct(req, res))
 // });
 
 // patch || update the products
-app.patch("/products/:id", (req, res) => productsController.updateProducts(req, res));
+app.patch("/api/products/:id", (req, res) => productsController.updateProducts(req, res));
 // const productId = +req.params.id;
 // if (isNaN(productId)) {
 //     return res.status(404).send({
@@ -72,7 +75,7 @@ app.patch("/products/:id", (req, res) => productsController.updateProducts(req, 
 // }
 
 // delete || delete the product
-app.delete("/products/:id", (req, res) => productsController.deleteProducts(req, res));
+app.delete("/api/products/:id", (req, res) => productsController.deleteProducts(req, res));
 // const productId = +req.params.id;
 // if (isNaN(productId)) {
 //     return res.status(404).send({
@@ -90,6 +93,16 @@ app.delete("/products/:id", (req, res) => productsController.deleteProducts(req,
 //         message: "Product not Found!",
 //     });
 // }
+
+
+app.get('/', (req, res) => {
+    res.render("index");
+});
+
+app.get('/*splat', (req, res) => {
+    res.render("notFound");
+});
+
 
 const PORT = 5000;
 app.listen(PORT ,() => {
