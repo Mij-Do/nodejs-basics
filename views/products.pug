@@ -6,4 +6,11 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title products
     body 
-        h1 Ths is Our Products
+        h1= pageTitle
+        p= description
+        // products render
+        ul
+            each product in products 
+                li 
+                    span= product.title 
+                    span= product.price

@@ -81,6 +81,14 @@ class ProductsController {
         });
     }
     }
+
+    renderProductsList (req: Request, res: Response) {
+        res.render("products", {
+            pageTitle: "Product Title",
+            description: "Product Description",
+            products: this.productService.findAll()
+        })
+    }
 };
 
 export default ProductsController;
