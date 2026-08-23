@@ -13,7 +13,8 @@ html(lang="en")
         div.wrapper
             each product in products 
                 div.product
-                    h3.title= product.title
+                    a(href=`/products/${product.id}`).title
+                        h3= product.title
                     p.desc= product.description 
                     p.price= product.price
                     button(type="button").button Add To Card 
