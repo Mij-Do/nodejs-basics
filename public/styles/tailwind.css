@@ -1,2 +1,3 @@
-/* styles.css */
-@tailwind utilities;   
+@import "tailwindcss";
+
+@source "../../views/*.pug";

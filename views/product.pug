@@ -6,5 +6,5 @@ html(lang="en")
         link(rel="stylesheet", href="/styles/global.css")
         title= `Product - ${product.id}`
     body 
-        h2.text-red-200= product.title 
+        h2(class="bg-red-200 p-4 text-red-800")= product.title 
         p= product.description
