@@ -8,6 +8,7 @@ export const generateFakeData = () => {
             title: faker.commerce.productName(),
             price: faker.commerce.price(),
             description: faker.commerce.productDescription(),
+            imageURL: faker.image.urlPicsumPhotos()
         }
     })
 }

@@ -3,6 +3,7 @@ export interface IProduct {
     title: string;
     price: string;
     description: string;
+    imageURL?: string;
 }
 
 export interface IProductBody {
