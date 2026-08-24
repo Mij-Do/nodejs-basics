@@ -1,10 +1,13 @@
-
 import {type Request, type Response} from 'express';
 import type ProductService from '../services/productService.js';
 
 class ProductsController {
     constructor (private productService: ProductService) {
         this.getProducts = this.getProducts.bind(this);
+        this.postNewProduct = this.postNewProduct.bind(this);
+        this.getProductById = this.getProductById.bind(this);
+        this.updateProducts = this.updateProducts.bind(this);
+        this.deleteProducts = this.deleteProducts.bind(this);
     }
 
     getProducts (req: Request, res: Response) {
@@ -82,21 +85,6 @@ class ProductsController {
             message: "Product not Found!",
         });
     }
-    }
-
-    renderProductsList (req: Request, res: Response) {
-        res.render("products", {
-            pageTitle: "Products List",
-            description: "Most of Our Awesome Products",
-            products: this.productService.findAll()
-        })
-    }
-
-    renderProductPage (req: Request, res: Response) {
-        const productId = Number(req.params.id);
-        res.render("product", {
-            product: this.productService.getProductById(productId)
-        })
     }
 };
 

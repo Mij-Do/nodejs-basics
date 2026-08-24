@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { generateFakeData } from './utils/fakeData.js';
 import ProductsController from './controllers/productsControllers.js';
 import productsRoutes from './routes/products.js';
+import ProductsViewController from './controllers/productsViewController.js';
 
 
 const app = express();
@@ -28,10 +29,12 @@ const productService = new ProductService(fakeProductData);
 // controller
 const productsController = new ProductsController(productService);
 
+const productsViewController = new ProductsViewController(productService);
+
 // Products Routes
 // render
-app.get('/products', (req, res) => productsController.renderProductsList(req, res));
-app.get('/products/:id', (req, res) => productsController.renderProductPage(req, res));
+app.get('/products', productsViewController.renderProductsList);
+app.get('/products/:id', productsViewController.renderProductPage);
 
 // // api
 app.use("/api/products", productsRoutes);
