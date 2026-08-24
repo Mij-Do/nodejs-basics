@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { generateFakeData } from './utils/fakeData.js';
 import ProductsController from './controllers/productsControllers.js';
+import productsRoutes from './routes/products.js';
 
 
 const app = express();
@@ -28,53 +29,57 @@ const productService = new ProductService(fakeProductData);
 const productsController = new ProductsController(productService);
 
 // Products Routes
+// render
 app.get('/products', (req, res) => productsController.renderProductsList(req, res));
 app.get('/products/:id', (req, res) => productsController.renderProductPage(req, res));
 
-// get products
-app.get('/api/products', (req, res) => productsController.getProducts(req, res));
+// // api
+app.use("/api/products", productsRoutes);
 
-app.get(`/api/products/:id`, (req, res) => productsController.getProductById(req, res));
+// // get products
+// app.get('/api/products', (req, res) => productsController.getProducts(req, res));
 
-// post || create a new product
-app.post("/api/products", (req, res) => productsController.postNewProduct(req, res));
-// console.log(req.body);
-// const newProduct = req.body;
+// app.get(`/api/products/:id`, (req, res) => productsController.getProductById(req, res));
 
-// fakeProductData.push({id: fakeProductData.length + 1, ...newProduct});
+// // post || create a new product
+// app.post("/api/products", (req, res) => productsController.postNewProduct(req, res));
+// // console.log(req.body);
+// // const newProduct = req.body;
 
-// res.status(201).send({
-//     id: fakeProductData.length + 1,
-//     title: newProduct.title,
-//     description: newProduct.description,
-//     price: newProduct.price,
-// });
+// // fakeProductData.push({id: fakeProductData.length + 1, ...newProduct});
 
-// patch || update the products
-app.patch("/api/products/:id", (req, res) => productsController.updateProducts(req, res));
-// const productId = +req.params.id;
-// if (isNaN(productId)) {
-//     return res.status(404).send({
-//         message: "Product not Found!",
-//     });
-// }
+// // res.status(201).send({
+// //     id: fakeProductData.length + 1,
+// //     title: newProduct.title,
+// //     description: newProduct.description,
+// //     price: newProduct.price,
+// // });
 
-// const productIndex: number | undefined = fakeProductData.findIndex(product => product.id === productId);
-// const productBody = req.body;
+// // patch || update the products
+// app.patch("/api/products/:id", (req, res) => productsController.updateProducts(req, res));
+// // const productId = +req.params.id;
+// // if (isNaN(productId)) {
+// //     return res.status(404).send({
+// //         message: "Product not Found!",
+// //     });
+// // }
 
-// if (productIndex !== -1) {
-//     fakeProductData[productIndex] = {...fakeProductData[productIndex], ...productBody};
-//     return res.status(200).send({
-//         message: "Product has been Updated!"
-//     });
-// } else {
-//     return res.status(404).send({
-//         message: "Product not Found!",
-//     });
-// }
+// // const productIndex: number | undefined = fakeProductData.findIndex(product => product.id === productId);
+// // const productBody = req.body;
 
-// delete || delete the product
-app.delete("/api/products/:id", (req, res) => productsController.deleteProducts(req, res));
+// // if (productIndex !== -1) {
+// //     fakeProductData[productIndex] = {...fakeProductData[productIndex], ...productBody};
+// //     return res.status(200).send({
+// //         message: "Product has been Updated!"
+// //     });
+// // } else {
+// //     return res.status(404).send({
+// //         message: "Product not Found!",
+// //     });
+// // }
+
+// // delete || delete the product
+// app.delete("/api/products/:id", (req, res) => productsController.deleteProducts(req, res));
 // const productId = +req.params.id;
 // if (isNaN(productId)) {
 //     return res.status(404).send({
