@@ -3,7 +3,9 @@ import {type Request, type Response} from 'express';
 import type ProductService from '../services/productService.js';
 
 class ProductsController {
-    constructor (private productService: ProductService) {}
+    constructor (private productService: ProductService) {
+        this.getProducts = this.getProducts.bind(this);
+    }
 
     getProducts (req: Request, res: Response) {
         const filteredQuery = req.query.filter as string;
