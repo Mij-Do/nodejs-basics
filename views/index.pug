@@ -1,8 +1,3 @@
-html
-    head
-        link(rel="stylesheet", href="/styles/global.css")
-        title template-engine
-    body
-        div
-            include components/_navbar
-            h1.page-title !Home Page!
+extends layout/_base
+block content
+    h1.page-title !Home Page!

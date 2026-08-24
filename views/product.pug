@@ -1,13 +1,6 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="stylesheet", href="/styles/global.css")
-        title= `Product - ${product.id}`
-    body 
-        include components/_navbar
-        h2(class="bg-slate-200 p-4 text-center")= product.title 
+extends layout/_base
+block content 
+    h2(class="bg-slate-200 p-4 text-center")= product.title 
         div.w-md.mx-auto
             div(class="mt-5 flex w-full flex-col justify-center items-center rounded-lg border border-gray-100 bg-white shadow-md")
                 a.mx-3.mt-3.h-60(href="/products/"+product.id)
