@@ -16,5 +16,6 @@ export default class ErrorMiddleware {
             message: "Internal Server Error",
             error: err.message,
         })
+        next();
     }
 }

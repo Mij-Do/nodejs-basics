@@ -214,6 +214,9 @@
       max-width: 96rem;
     }
   }
+  .m-auto {
+    margin: auto;
+  }
   .mx-3 {
     margin-inline: calc(var(--spacing) * 3);
   }
@@ -222,6 +225,9 @@
   }
   .my-5 {
     margin-block: calc(var(--spacing) * 5);
+  }
+  .my-auto {
+    margin-block: auto;
   }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
@@ -303,9 +309,6 @@
     --tw-space-x-reverse: 0;
     margin-inline-start: calc(calc(var(--spacing) * 4) * var(--tw-space-x-reverse));
     margin-inline-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-x-reverse)));
-  }
-  .rounded {
-    border-radius: 0.25rem;
   }
   .rounded-lg {
     border-radius: var(--radius-lg);

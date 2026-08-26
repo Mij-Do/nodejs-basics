@@ -3,6 +3,11 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/styles/global.css")
         title not found
-    body 
-        h1 This page is Not Found ...
+    body
+        .w-full.h-screen.bg-gray-100.px-2.text-center.rounded-lg
+            .flex.flex-col.justify-center.items-center.mx-auto
+                h1.text-8xl.font-extrabold.text-red-500 404 
+                p.text-4xl.font-medium.text-gray-800 This page is Not Found ...
+                p.text-xl.text-gray-800.mt-4 We apologize for the inconvenience. Please try again later.

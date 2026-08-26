@@ -8,6 +8,7 @@ import productsRoutes from './routes/products.js';
 import ProductsViewController from './controllers/productsViewController.js';
 import ErrorMiddleware from './middlewares/Error.js';
 import dotenv from "dotenv";
+import NotFoundMiddleware from './middlewares/NotFound.js';
 
 
 const app = express();
@@ -109,12 +110,10 @@ app.get('/', (req, res) => {
     res.render("index");
 });
 
-app.get('/*splat', (req, res) => {
-    res.render("notFound");
-});
 
 // Middlewares
 app.use(ErrorMiddleware.handle);
+app.use(NotFoundMiddleware.handle);
 
 const PORT = 5000;
 app.listen(PORT ,() => {
