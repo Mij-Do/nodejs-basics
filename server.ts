@@ -9,6 +9,7 @@ import ProductsViewController from './controllers/productsViewController.js';
 import ErrorMiddleware from './middlewares/Error.js';
 import dotenv from "dotenv";
 import NotFoundMiddleware from './middlewares/NotFound.js';
+import helmet from "helmet";
 
 
 const app = express();
@@ -19,7 +20,13 @@ app.use(express.json());
 dotenv.config();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
-
+app.use(helmet({
+    // this line is danger, do not do this in production 
+    contentSecurityPolicy: false,
+    xFrameOptions: {
+        action: "deny",
+    }
+}))
 // public 
 app.use(express.static(path.join(__dirname, "public")));
 
