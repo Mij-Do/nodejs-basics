@@ -7,6 +7,7 @@ import ProductsController from './controllers/productsControllers.js';
 import productsRoutes from './routes/products.js';
 import ProductsViewController from './controllers/productsViewController.js';
 import ErrorMiddleware from './middlewares/Error.js';
+import dotenv from "dotenv";
 
 
 const app = express();
@@ -14,6 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.json());
+dotenv.config();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 

@@ -21,6 +21,7 @@
     "dev": "concurrently \"npm run watch:css\" \"tsx watch server.ts\""
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "pug": "^3.0.4",
     "tailwindcss": "^4.3.3"
