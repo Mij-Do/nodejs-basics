@@ -1,0 +1,20 @@
+extends layout/_base
+block title
+    title Products Page
+block content 
+    div.container.mx-a
+        h1(class='text-center mb-5 bg-slate-200 p-5 rounded-md text-xl')= pageTitle
+        p(class="text-center")= description
+        div(class="grid grid-cols-1 mx-auto sm:grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5")
+            each product in products 
+                div(class="mt-5 flex w-full flex-col justify-between items-center space-y-3 rounded-lg border border-gray-100 bg-white shadow-md")
+                    a.mx-3.mt-3.h-60(href="/products/"+product.id)
+                        img.rounded-lg.w-100.h-50(src= product.imageURL alt='product image')
+                    .mt-4.w-full.flex.flex-col.justify-between.items-center
+                        a(href="/products/"+product.id)
+                            h5.text-xl.tracking-tight.text-slate-900= product.title
+                        .mt-2.mb-5.flex.items-center.justify-between
+                            p
+                                span.text-3xl.font-bold.text-slate-900= `$${product.price}`
+                        div.w-full
+                            button(class='flex w-full items-center justify-center rounded-lg bg-slate-900 text-center text-sm font-medium text-white py-2.5 hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300') Add to cart
