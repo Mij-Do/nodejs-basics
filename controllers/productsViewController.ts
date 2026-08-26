@@ -9,6 +9,7 @@ class ProductsViewController {
 
 
     renderProductsList (req: Request, res: Response) {
+        // throw new Error("Something Went Wrong!!");
         res.render("products", {
             pageTitle: "Products List",
             description: "Most of Our Awesome Products",
