@@ -11,6 +11,7 @@ class ProductsController {
     }
 
     getProducts (req: Request, res: Response) {
+        throw new Error("Something went wrong!!");
         const filteredQuery = req.query.filter as string;
         if (filteredQuery) {
             return res.send(this.productService.filterByQuery(filteredQuery));

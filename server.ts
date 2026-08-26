@@ -6,6 +6,7 @@ import { generateFakeData } from './utils/fakeData.js';
 import ProductsController from './controllers/productsControllers.js';
 import productsRoutes from './routes/products.js';
 import ProductsViewController from './controllers/productsViewController.js';
+import ErrorMiddleware from './middlewares/Error.js';
 
 
 const app = express();
@@ -110,6 +111,8 @@ app.get('/*splat', (req, res) => {
     res.render("notFound");
 });
 
+// Middlewares
+app.use(ErrorMiddleware.handle);
 
 const PORT = 5000;
 app.listen(PORT ,() => {
