@@ -3,7 +3,9 @@
   "devDependencies": {
     "@faker-js/faker": "^10.5.0",
     "@tailwindcss/postcss": "^4.3.3",
+    "@types/compression": "^1.8.1",
     "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
     "@types/node": "^26.0.1",
     "concurrently": "^9.2.4",
     "nodemon": "^3.1.14",
@@ -21,9 +23,12 @@
     "dev": "concurrently \"npm run watch:css\" \"tsx watch server.ts\""
   },
   "dependencies": {
+    "compression": "^1.8.1",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.6.2",
     "helmet": "^8.3.0",
+    "morgan": "^1.11.0",
     "pug": "^3.0.4",
     "tailwindcss": "^4.3.3"
   }

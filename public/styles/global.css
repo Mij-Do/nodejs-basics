@@ -214,9 +214,6 @@
       max-width: 96rem;
     }
   }
-  .m-auto {
-    margin: auto;
-  }
   .mx-3 {
     margin-inline: calc(var(--spacing) * 3);
   }
@@ -225,9 +222,6 @@
   }
   .my-5 {
     margin-block: calc(var(--spacing) * 5);
-  }
-  .my-auto {
-    margin-block: auto;
   }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);

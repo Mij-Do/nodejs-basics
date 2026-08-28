@@ -10,7 +10,9 @@ import ErrorMiddleware from './middlewares/Error.js';
 import dotenv from "dotenv";
 import NotFoundMiddleware from './middlewares/NotFound.js';
 import helmet from "helmet";
-
+import morgan from "morgan";
+import { rateLimit } from 'express-rate-limit';
+import compression from "compression";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -26,7 +28,18 @@ app.use(helmet({
     xFrameOptions: {
         action: "deny",
     }
-}))
+}));
+
+app.use(compression());
+
+app.use(morgan("dev"));
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 100,
+    message: "Too many Requests from this IP, Please Try Later ."
+});
+app.use(limiter);
+
 // public 
 app.use(express.static(path.join(__dirname, "public")));
 
