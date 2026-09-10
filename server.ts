@@ -3,7 +3,7 @@ import ProductService from './services/productService.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { generateFakeData } from './utils/fakeData.js';
-import ProductsController from './controllers/productsControllers.js';
+// import ProductsController from './controllers/productsControllers.js';
 import productsRoutes from './routes/products.js';
 import ProductsViewController from './controllers/productsViewController.js';
 import ErrorMiddleware from './middlewares/Error.js';
@@ -13,6 +13,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { rateLimit } from 'express-rate-limit';
 import compression from "compression";
+import pool from './model/db.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -51,7 +52,7 @@ const fakeProductData =  generateFakeData();
 // services
 const productService = new ProductService(fakeProductData);
 // controller
-const productsController = new ProductsController(productService);
+// const productsController = new ProductsController(productService);
 
 const productsViewController = new ProductsViewController(productService);
 
@@ -62,6 +63,18 @@ app.get('/products/:id', productsViewController.renderProductPage);
 
 // // api
 app.use("/api/products", productsRoutes);
+
+app.get("/db/products", async (req, res) => {
+    try {
+        const products = await pool.query("select id, name, price from products limit 20;");
+        res.json({
+            products: products.rows,
+            length: products.rowCount,
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 // // get products
 // app.get('/api/products', (req, res) => productsController.getProducts(req, res));
