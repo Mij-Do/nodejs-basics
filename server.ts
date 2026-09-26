@@ -13,7 +13,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { rateLimit } from 'express-rate-limit';
 import compression from "compression";
-import pool from './model/db.js';
+// import pool from './model/db.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -64,18 +64,18 @@ app.get('/products/:id', productsViewController.renderProductPage);
 // // api
 app.use("/api/products", productsRoutes);
 
-app.get("/db/products", async (req, res) => {
-    try {
-        const products = await pool.query("select id, name, price, qty from products limit 25;");
-        res.status(200).json({
-            products: products.rows,
-            length: products.rowCount
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
+// app.get("/db/products", async (req, res) => {
+//     try {
+//         const products = await pool.query("select id, name, price, qty from products limit 25;");
+//         res.status(200).json({
+//             products: products.rows,
+//             length: products.rowCount
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: "Internal Server Error" });
+//     }
+// });
 
 // // get products
 // app.get('/api/products', (req, res) => productsController.getProducts(req, res));
