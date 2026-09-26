@@ -66,13 +66,14 @@ app.use("/api/products", productsRoutes);
 
 app.get("/db/products", async (req, res) => {
     try {
-        const products = await pool.query("select id, name, price from products limit 20;");
-        res.json({
+        const products = await pool.query("select id, name, price, qty from products limit 25;");
+        res.status(200).json({
             products: products.rows,
-            length: products.rowCount,
+            length: products.rowCount
         });
     } catch (error) {
         console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 

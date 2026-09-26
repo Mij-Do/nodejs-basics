@@ -20,7 +20,7 @@ class ProductsViewController {
     renderProductPage (req: Request, res: Response) {
         const productId = Number(req.params.id);
         res.render("product", {
-            product: this.productService.getProductById(productId)
+            // product: this.productService.getProductById(productId)
         })
     }
 }

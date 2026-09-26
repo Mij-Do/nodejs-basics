@@ -10,13 +10,13 @@ const fakeProductData =  generateFakeData();
 // services
 const productService = new ProductService(fakeProductData);
 // controller
-const {getProducts, postNewProduct, getProductById, updateProducts, deleteProducts} = new ProductsController(productService);
+const {getProducts} = new ProductsController(productService);
 
 
 const productsRoutes = Router();
 
-productsRoutes.route("/").get(getProducts).post(postNewProduct);
-productsRoutes.route("/:id").get(getProductById).patch(updateProducts).delete(deleteProducts);
+productsRoutes.route("/").get(getProducts);
+// productsRoutes.route("/:id").get(getProductById).patch(updateProducts).delete(deleteProducts);
 
 export default productsRoutes;
 
